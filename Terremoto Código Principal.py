@@ -37,16 +37,16 @@ def menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == '1':
-            # Lógica para cargar o modificar datos
+            #Lógica para cargar o modificar datos
             pass
         elif opcion == '2':
-            # Lógica para estimar consecuencias
+            #Lógica para estimar consecuencias
             pass
         elif opcion == '3':
-            # Lógica para estimar zonas de riesgo
+            #Lógica para estimar zonas de riesgo
             pass
         elif opcion == '4':
-            # Lógica para mostrar la región geográfica
+            #Lógica para mostrar la región geográfica
             pass
         elif opcion == '5':
             print("Saliendo del programa.")
