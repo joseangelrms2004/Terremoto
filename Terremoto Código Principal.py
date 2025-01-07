@@ -3,27 +3,29 @@ class Region:
         self.nombre = nombre
         self.costo = costo  # Matriz de costos
         self.dolor = dolor  # Matriz de pérdidas humanas
+
     def cargar_datos(self, archivo):
         try:
             with open(archivo, 'r') as file:
                 lines = file.readlines()
-                # Leer la primera línea que contiene el nombre de la región
                 self.costo = []
+                self.dolor = []
                 i = 0
-                while i < len(lines) and lines[i].strip():  # Mientras la línea no esté vacía
+                # Leer la matriz de costos
+                while i < len(lines) and lines[i].strip():
                     self.costo.append([float(val) for val in lines[i].split()])
                     i += 1
                 # Saltar la línea en blanco
                 i += 1
-                # Leer la sección de pérdidas humanas
-                self.dolor = []
-                while i < len(lines) and lines[i].strip():  # Mientras la línea no esté vacía
+                # Leer la matriz de pérdidas humanas
+                while i < len(lines) and lines[i].strip():
                     self.dolor.append([float(val) for val in lines[i].split()])
                     i += 1
-                
                 print("Datos cargados exitosamente.")
         except FileNotFoundError:
             print(f"Error: El archivo {archivo} no fue encontrado.")
+        except ValueError:
+            print("Error: Formato de datos incorrecto en el archivo.")
         except Exception as e:
             print(f"Error al cargar los datos: {e}")
 
@@ -34,12 +36,11 @@ class Region:
     def estimar_consecuencias(self, epicentro, intensidad):
         total_costo = 0
         total_dolor = 0
-        #Calcular el rango afectado por el terremoto
+        # Calcular el rango afectado por el terremoto
         for x in range(max(0, epicentro[0] - intensidad), min(len(self.costo), epicentro[0] + intensidad + 1)):
             for y in range(max(0, epicentro[1] - intensidad), min(len(self.costo[0]), epicentro[1] + intensidad + 1)):
-                if abs(epicentro[0] - x) + abs(epicentro[1] - y) <= intensidad:
-                    total_costo += self.costo[x][y]
-                    total_dolor += self.dolor[x][y]
+                total_costo += self.costo[x][y]
+                total_dolor += self.dolor[x][y]
         return total_costo, total_dolor
 
     def mostrar_region(self):
